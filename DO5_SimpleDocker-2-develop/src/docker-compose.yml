@@ -1,0 +1,24 @@
+version: '3.0'
+
+services:
+  newuser:
+    image: myserver:v1
+    build: .
+    container_name: myserver
+    networks:
+      - nginx
+
+  nginx_container:
+    image: nginx:latest
+    container_name: nginx_container
+    volumes:
+      - ./nginx.part6.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:8080"
+    networks:
+      - nginx
+    command: [ "nginx", "-g", "daemon off;" ]
+
+networks:
+  nginx:
+    driver: bridge
